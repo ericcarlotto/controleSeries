@@ -11,6 +11,10 @@
 |
 */
 
+use App\Http\Controllers\SeasonsController;
+use App\Http\Controllers\SeriesController;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,3 +25,5 @@ Route::get('/series/create', 'SeriesController@create')
     ->name('form_criar_serie');
 Route::post('/series/create', 'SeriesController@store');
 Route::post('/series/remover/{id}', 'SeriesController@destroy');
+
+Route::get('/series/{serieId}/seasons', 'SeasonsController@index');
