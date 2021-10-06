@@ -9,14 +9,14 @@ class SerieRemover
 {
     public function SerieRemove(int $serieId): string
     {
-        DB::beginTransaction();
+        $serieName = '';
+        DB::transaction(function () use ($serieId, &$serieName) {
+            $serie = Serie::find($serieId);
+            $serieName = $serie->name;
+            $this->removeSeason($serie);
+            $serie->delete();
 
-        $serie = Serie::find($serieId);
-        $serieName = $serie->name;
-        $this->removeSeason($serie);
-        $serie->delete();
-
-        DB::commit();
+        });
 
         return $serieName;
     }
