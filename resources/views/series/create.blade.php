@@ -7,18 +7,10 @@
 
 @section('conteudo')
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-<form method="post">
-    @csrf
-    <div class="row">
+   @include('errors', ['errors' => $errors])
+   <form method="post">
+        @csrf
+        <div class="row">
         <div class="col col-8">
             <label for="name">Nome</label>
             <input type="text" class="form-control" name="name" id="name">
@@ -31,7 +23,7 @@
             <label for="ep_temporada">Ep. por temporada</label>
             <input type="number" class="form-control" name="ep_temporada" id="ep_temporada">
         </div>
-    </div>
-<button class="btn btn-primary mt-2">Adicionar</button>
-</form>
+        </div>
+        <button class="btn btn-primary mt-2">Adicionar</button>
+   </form>
 @endsection

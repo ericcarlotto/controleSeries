@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,14 +24,35 @@ Route::get('/', function () {
 Route::get('/series', 'SeriesController@index')
     ->name('listar_series');
 Route::get('/series/create', 'SeriesController@create')
-    ->name('form_criar_serie');
-Route::post('/series/create', 'SeriesController@store');
-Route::post('/series/remover/{id}', 'SeriesController@destroy');
-Route::post('/series/{id}/nameEdit', 'SeriesController@nameEdit');
-
+    ->name('form_criar_serie')
+    ->middleware('auth');
+Route::post('/series/create', 'SeriesController@store')
+    ->middleware('auth');
+Route::post('/series/remover/{id}', 'SeriesController@destroy')
+    ->middleware('auth');
+Route::post('/series/{id}/nameEdit', 'SeriesController@nameEdit')
+    ->middleware('auth');
 //Seasons
 Route::get('/series/{serieId}/seasons', 'SeasonsController@index');
 
 //Episodes
 Route::get('/seasons/{season}/episodes', 'EpisodesController@index');
-Route::post('/seasons/{season}/episodes/watch', 'EpisodesController@watch');
+Route::post('/seasons/{season}/episodes/watch', 'EpisodesController@watch')
+    ->middleware('auth');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//Autentication
+Route::get('/getin', 'GetInController@index');
+Route::post('/getin', 'GetInController@getIn');
+
+//Register
+Route::get('/register', 'RegisterController@create');
+Route::post('/register', 'RegisterController@store');
+
+//Logout
+Route::get('/logout', function () {
+   Auth::logout();
+   return redirect('/getin');
+});

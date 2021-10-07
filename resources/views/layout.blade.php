@@ -11,6 +11,17 @@
     <title>Controle de Séries</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2 d-flex justify-content-between">
+        <a class="btn btn-secondary navbar navbar-expand-lg" href="{{ route('listar_series') }}">Home</a>
+        @auth
+            <a href="/logout" class="btn btn-danger">Sair</a>
+        @endauth
+
+        @guest
+            <a href="/getin" class="btn btn-primary">Entrar</a>
+        @endguest
+
+    </nav>
     <div class="container">
         <div class="jumbotron">
             <h1>@yield('cabecalho')</h1>
